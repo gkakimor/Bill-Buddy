@@ -5,21 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".UpcomingBills">
 
-    <EditText
-        android:id="@+id/editTextText2"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Name" />
+        android:text="Upcoming Bills"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/lvUpcomingBills"
+        android:layout_width="match_parent"
+        android:layout_height="450dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="save"
-        android:text="Save" />
+        android:onClick="home"
+        android:text="HOME" />
 
 </LinearLayout>

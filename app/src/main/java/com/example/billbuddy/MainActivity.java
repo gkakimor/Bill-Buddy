@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void save (View view){
-        //DbHandler dbHandler = new DbHandler(MainActivity.this);
-        //dbHandler.populateInitialData();
+        DbHandler dbHandler = new DbHandler(MainActivity.this);
+        dbHandler.populateInitialData();
 
         // Save new Type Example
         /*Type type = new Type();

@@ -70,7 +70,7 @@ public class DbHandler extends SQLiteOpenHelper {
                 ")";
         db.execSQL(CREATE_BILLS_TABLE);
 
-        populateInitialData(db);
+        //populateInitialData(db);
     }
 
     @Override
@@ -152,7 +152,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     // Find All Not Payed Bills
     @SuppressLint("Range")
-    public ArrayList<Bill> getAllNotPayedBills () {
+    public ArrayList<Bill> getAllNotPayedBills (int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Bill> billList = new ArrayList<>();
 
@@ -160,7 +160,9 @@ public class DbHandler extends SQLiteOpenHelper {
                 " FROM " + TABLE_BILLS + " b, " + TABLE_TYPE + " t, " + TABLE_FREQUENCY + " f " +
                 " WHERE b.type = t.id" +
                 " AND b.frequency = f.id " +
-                " AND payed = false";
+                " AND b.payed = false " +
+                " AND b.user_id = " + user_id +
+                " ORDER BY b.due_date ";
 
         Cursor cursor = db.rawQuery(query,null);
 
@@ -189,7 +191,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
     // Find All Payed Bills
     @SuppressLint("Range")
-    public ArrayList<Bill> getAllPayedBills () {
+    public ArrayList<Bill> getAllPayedBills (int user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ArrayList<Bill> billList = new ArrayList<>();
 
@@ -197,7 +199,9 @@ public class DbHandler extends SQLiteOpenHelper {
                 " FROM " + TABLE_BILLS + " b, " + TABLE_TYPE + " t, " + TABLE_FREQUENCY + " f " +
                 " WHERE b.type = t.id" +
                 " AND b.frequency = f.id " +
-                " AND payed = true";
+                " AND b.payed = true " +
+                " AND b.user_id = " + user_id +
+                " ORDER BY b.payment_date DESC ";
 
         Cursor cursor = db.rawQuery(query,null);
 
@@ -308,9 +312,9 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void populateInitialData (SQLiteDatabase db) {
+    public void populateInitialData () {
         //SQLiteDatabase db
-        //SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         String INSERT_FREQUENCY = "insert into frequency values (1, \"weekly\")";
         db.execSQL(INSERT_FREQUENCY);
         INSERT_FREQUENCY = "insert into frequency values (2, \"bi-weekly\")";
@@ -327,17 +331,48 @@ public class DbHandler extends SQLiteOpenHelper {
         INSERT_TYPE = "insert into type values (3, \"college\")";
         db.execSQL(INSERT_TYPE);
 
-        String INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed) values (1, 3, 1000.0, \"douglas\", \"2023-11-14\", 1, 0)";
+        String INSERT_USER = "insert into users (id, name, birth, email, password) values (1, \"Alana\", \"1987-11-14\", \"alana@email.com\", \"senha123\")";
+        db.execSQL(INSERT_USER);
+        INSERT_USER = "insert into users (id, name, birth, email, password) values (2, \"Bruno\", \"1987-11-14\", \"bruno@email.com\", \"senha123\")";
+        db.execSQL(INSERT_USER);
+        INSERT_USER = "insert into users (id, name, birth, email, password) values (3, \"Carlos\", \"1987-11-14\", \"carlos@email.com\", \"senha123\")";
+        db.execSQL(INSERT_USER);
+
+
+        // Bills User 1
+        String INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (1, 3, 1000.0, \"Douglas\", \"2023-12-04\", 1, 0, 1)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (2, 1, 2500.0, \"House\", \"2023-12-22\", 3, 0, 1)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (3, 2, 2500.0, \"Gym\", \"2023-11-20\", 1, 1, 1, \"2023-11-14\")";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (4, 2, 2500.0, \"BCHydro\", \"2023-12-01\", 1, 0, 1)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (5, 1, 20.0, \"Walmart\", \"2023-11-29\", 2, 1, 1, \"2023-11-25\")";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (6, 3, 250.0, \"Best Buy\", \"2023-12-15\", 1, 0, 1)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (7, 2, 500.0, \"Tellus\", \"2023-11-19\", 2, 1, 1, \"2023-11-19\")";
         db.execSQL(INSERT_BILL);
 
-        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed) values (2, 1, 2500.0, \"house\", \"2023-11-15\", 3, 0)";
+        // Bills User 2
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (8, 2, 2500.0, \"BCHydro 2\", \"2023-12-01\", 1, 0, 2)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (9, 1, 20.0, \"Walmart 2\", \"2023-11-29\", 2, 2, 2, \"2023-11-25\")";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (10, 3, 250.0, \"Best Buy 2\", \"2023-12-15\", 1, 0, 2)";
         db.execSQL(INSERT_BILL);
 
-        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, payment_date) values (3, 2, 2500.0, \"gym\", \"2023-11-20\", 1, 1, \"2023-11-14\")";
+        // Bills User 3
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (11, 3, 1000.0, \"Douglas 3\", \"2023-12-04\", 1, 0, 3)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (12, 1, 2500.0, \"House 3\", \"2023-12-22\", 3, 0, 3)";
+        db.execSQL(INSERT_BILL);
+        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (13, 2, 2500.0, \"Gym 3\", \"2023-11-20\", 1, 1, 3, \"2023-11-14\")";
         db.execSQL(INSERT_BILL);
 
-        INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed) values (4, 2, 2500.0, \"BCHydro\", \"2023-11-20\", 1, 0)";
-        db.execSQL(INSERT_BILL);
+
+
 
         db.close();
     }
