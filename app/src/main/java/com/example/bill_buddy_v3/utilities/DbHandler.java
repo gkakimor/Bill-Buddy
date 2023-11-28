@@ -1,4 +1,4 @@
-package com.example.billbuddy.utilities;
+package com.example.bill_buddy_v3.utilities;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.billbuddy.model.Bill;
-import com.example.billbuddy.model.Frequency;
-import com.example.billbuddy.model.Type;
-import com.example.billbuddy.model.User;
+import com.example.bill_buddy_v3.model.Bill;
+import com.example.bill_buddy_v3.model.Frequency;
+import com.example.bill_buddy_v3.model.Type;
+import com.example.bill_buddy_v3.model.User;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -265,7 +267,7 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     // Insert New Type
-    public void addNewType (Type type) {
+    public Long addNewType (Type type) {
         //Get the Data Repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -273,8 +275,9 @@ public class DbHandler extends SQLiteOpenHelper {
         ContentValues cValues = new ContentValues();
         cValues.put ("type", type.getType());
 
-        db.insert(TABLE_TYPE,null, cValues);
+        Long code = db.insert(TABLE_TYPE,null, cValues);
         db.close();
+        return code;
     }
 
     // Find All Frequency
@@ -331,7 +334,7 @@ public class DbHandler extends SQLiteOpenHelper {
         INSERT_TYPE = "insert into type values (3, \"college\")";
         db.execSQL(INSERT_TYPE);
 
-        String INSERT_USER = "insert into users (id, name, birth, email, password) values (1, \"Alana\", \"1987-11-14\", \"alana@email.com\", \"senha123\")";
+        /*String INSERT_USER = "insert into users (id, name, birth, email, password) values (1, \"Alana\", \"1987-11-14\", \"alana@email.com\", \"senha123\")";
         db.execSQL(INSERT_USER);
         INSERT_USER = "insert into users (id, name, birth, email, password) values (2, \"Bruno\", \"1987-11-14\", \"bruno@email.com\", \"senha123\")";
         db.execSQL(INSERT_USER);
@@ -369,12 +372,32 @@ public class DbHandler extends SQLiteOpenHelper {
         INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id) values (12, 1, 2500.0, \"House 3\", \"2023-12-22\", 3, 0, 3)";
         db.execSQL(INSERT_BILL);
         INSERT_BILL = "insert into bills (id, type, amount, payee, due_date, frequency, payed, user_id, payment_date) values (13, 2, 2500.0, \"Gym 3\", \"2023-11-20\", 1, 1, 3, \"2023-11-14\")";
-        db.execSQL(INSERT_BILL);
-
-
+        db.execSQL(INSERT_BILL);*/
 
 
         db.close();
+    }
+
+    //LoginValidate
+    @SuppressLint("Range")
+    public User checkUser(String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_USERS +
+                " WHERE email = ? AND password = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+        //boolean userExists = cursor.moveToFirst();
+
+        User user = new User();
+
+        if (cursor.moveToFirst()) {
+
+            user.setId(cursor.getInt(cursor.getColumnIndex("id")));
+        }
+
+        cursor.close();
+        return user;
+
+
     }
 
 }

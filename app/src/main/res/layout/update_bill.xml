@@ -99,18 +99,4 @@
         android:onClick="updateBill"
         android:text="Update" />
 
-    <Button
-        android:id="@+id/btnHistory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="history"
-        android:text="History" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="upcoming"
-        android:text="Upcoming" />
-
 </LinearLayout>

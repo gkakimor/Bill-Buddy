@@ -1,6 +1,4 @@
-package com.example.billbuddy;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.bill_buddy_v3;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,14 +13,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.billbuddy.model.Bill;
-import com.example.billbuddy.utilities.DbHandler;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bill_buddy_v3.adapter.BillAdapter;
+import com.example.bill_buddy_v3.model.Bill;
+import com.example.bill_buddy_v3.utilities.DbHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class UpdateBill extends AppCompatActivity {
 
@@ -32,14 +32,15 @@ public class UpdateBill extends AppCompatActivity {
     BillAdapter billAdapter;
     Bill selectedBill;
     TextView txtSelectedPayee, txtSelectedFrequency, txtSelectedDueDate, txtSelectedAmount;
-
-    // TODO change to USERID received from home page.
-    private int user_id = 1;
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_bill);
+
+        Bundle extras = getIntent().getExtras();
+        user_id = extras.getInt("user_id");
 
         // Initialize Spinner
         initList();
@@ -59,7 +60,7 @@ public class UpdateBill extends AppCompatActivity {
                 txtSelectedAmount = findViewById(R.id.txtSelectedAmount);
 
                 if (selectedBill.getId() != 999){
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
                     txtSelectedPayee.setText(selectedBill.getPayee());
                     txtSelectedFrequency.setText(selectedBill.getFrequency().getFrequency());
@@ -94,7 +95,7 @@ public class UpdateBill extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                                editTxtPaymentDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                editTxtPaymentDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
                             }
                         },
                         year, month, day
@@ -119,7 +120,7 @@ public class UpdateBill extends AppCompatActivity {
 
         if (!editTxtPaymentDate.getText().toString().matches("")){
             DbHandler dbHandler = new DbHandler(UpdateBill.this);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             selectedBill.setPayment_date(sdf.parse(editTxtPaymentDate.getText().toString()));
 
             dbHandler.updateBillPaymentDate(selectedBill);
@@ -132,16 +133,5 @@ public class UpdateBill extends AppCompatActivity {
             Toast.makeText(UpdateBill.this, "Select Payment Date", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    public void history (View view) {
-            Intent intent = new Intent(UpdateBill.this, PaymentHistory.class);
-            intent.putExtra("user_id", user_id);
-            startActivity(intent);
-    }
-    public void upcoming (View view) {
-        Intent intent = new Intent(UpdateBill.this, UpcomingBills.class);
-        intent.putExtra("user_id", user_id);
-        startActivity(intent);
     }
 }

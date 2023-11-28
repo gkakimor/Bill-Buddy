@@ -1,4 +1,4 @@
-package com.example.billbuddy.model;
+package com.example.bill_buddy_v3.model;
 
 import java.util.Date;
 
@@ -12,6 +12,16 @@ public class Bill {
     private boolean payed;
     private Date payment_date;
     private int user_id;
+
+    public Bill() {
+
+
+    }
+
+
+
+    public Bill(String payee, String type, Date date, String amount, String frequency) {
+    }
 
     public int getId() {
         return id;

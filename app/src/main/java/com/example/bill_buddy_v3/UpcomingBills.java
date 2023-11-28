@@ -1,6 +1,4 @@
-package com.example.billbuddy;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.bill_buddy_v3;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,32 +6,37 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.example.billbuddy.model.Bill;
-import com.example.billbuddy.utilities.DbHandler;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bill_buddy_v3.model.Bill;
+import com.example.bill_buddy_v3.utilities.DbHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PaymentHistory extends AppCompatActivity {
-    private final Class HOME = UpdateBill.class;
-    private final PaymentHistory CURRENT = PaymentHistory.this;
+public class UpcomingBills extends AppCompatActivity {
+
+    private final Class HOME = Home.class;
+    private final UpcomingBills CURRENT = UpcomingBills.this;
+
+    int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.payment_history);
+        setContentView(R.layout.upcoming_bills);
 
         Bundle extras = getIntent().getExtras();
-        int user_id = extras.getInt("user_id");
+        user_id = extras.getInt("user_id");
 
-        ListView lvBills = findViewById(R.id.lvPayedBills);
+        ListView lvBills = findViewById(R.id.lvUpcomingBills);
         ArrayList<HashMap<String, Object>> payedBillsMap = new ArrayList<>();
 
-        DbHandler dbHandler = new DbHandler(PaymentHistory.this);
+        DbHandler dbHandler = new DbHandler(UpcomingBills.this);
 
-        ArrayList<Bill> payedBillList = dbHandler.getAllPayedBills(user_id);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        ArrayList<Bill> payedBillList = dbHandler.getAllNotPayedBills(user_id);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         for (int i = 0; i < payedBillList.size(); i++){
             HashMap<String, Object> map = new HashMap<>();
@@ -44,22 +47,22 @@ public class PaymentHistory extends AppCompatActivity {
             map.put("payee", payedBillList.get(i).getPayee());
             map.put("dueDate", sdf.format(payedBillList.get(i).getDue_date()));
             map.put("frequency", payedBillList.get(i).getFrequency().getFrequency());
-            map.put("paymentDate", sdf.format(payedBillList.get(i).getPayment_date()));
 
             payedBillsMap.add(map);
         }
 
-        String[] from = {"payee", "dueDate", "frequency", "amount", "paymentDate"};
-        int to[] = {R.id.txtName, R.id.txtDueDate, R.id.txtFrequency, R.id.txtAmount, R.id.txtPayedDate};
+        String[] from = {"payee", "dueDate", "frequency", "amount"};
+        int to[] = {R.id.txtName, R.id.txtDueDate, R.id.txtFrequency, R.id.txtAmount};
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(PaymentHistory.this,
-                payedBillsMap, R.layout.payed_bill_list, from, to);
+        SimpleAdapter simpleAdapter = new SimpleAdapter(UpcomingBills.this,
+                payedBillsMap, R.layout.upcoming_bill_list, from, to);
 
         lvBills.setAdapter(simpleAdapter);
     }
 
     public void home (View view) {
         Intent intent = new Intent(CURRENT, HOME);
+        intent.putExtra("user_id", user_id);
         startActivity(intent);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.billbuddy.model;
+package com.example.bill_buddy_v3.model;
 
 public class Type {
     private int id;
@@ -27,4 +27,10 @@ public class Type {
         this.id = id;
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return type;
+    }
+
 }

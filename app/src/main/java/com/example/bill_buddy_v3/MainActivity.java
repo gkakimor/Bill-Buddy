@@ -1,25 +1,12 @@
-package com.example.billbuddy;
+package com.example.bill_buddy_v3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.billbuddy.model.Bill;
-import com.example.billbuddy.model.Frequency;
-import com.example.billbuddy.model.Type;
-import com.example.billbuddy.model.User;
-import com.example.billbuddy.utilities.DbHandler;
-
-import java.util.ArrayList;
-import java.util.Date;
+import com.example.bill_buddy_v3.utilities.DbHandler;
 
 public class MainActivity extends AppCompatActivity {
 

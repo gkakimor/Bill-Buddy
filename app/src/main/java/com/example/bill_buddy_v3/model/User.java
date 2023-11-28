@@ -1,4 +1,4 @@
-package com.example.billbuddy.model;
+package com.example.bill_buddy_v3.model;
 
 import java.util.Date;
 
@@ -8,6 +8,13 @@ public class User {
     private Date birth;
     private String email;
     private String password;
+
+    public User() {
+    }
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.example.billbuddy;
+package com.example.bill_buddy_v3.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.billbuddy.model.Bill;
+import com.example.bill_buddy_v3.R;
+import com.example.bill_buddy_v3.model.Bill;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class BillAdapter extends ArrayAdapter<Bill> {
                 txtFrequency.setText(currentItem.getFrequency().getFrequency());
                 txtAmount.setText(Double.toString(currentItem.getAmount()));
 
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String formatedDate = sdf.format(currentItem.getDue_date());
                 txtDueDate.setText(formatedDate);
             } else {

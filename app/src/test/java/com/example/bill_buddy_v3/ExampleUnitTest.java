@@ -1,4 +1,4 @@
-package com.example.billbuddy;
+package com.example.bill_buddy_v3;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.billbuddy.model;
+package com.example.bill_buddy_v3.model;
 
 public class Frequency {
     private int id;
@@ -26,5 +26,10 @@ public class Frequency {
     public Frequency(int id, String frequency) {
         this.id = id;
         this.frequency = frequency;
+    }
+
+    @Override
+    public String toString() {
+        return frequency;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.billbuddy;
+package com.example.bill_buddy_v3;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.billbuddy", appContext.getPackageName());
+        assertEquals("com.example.bill_buddy_v3", appContext.getPackageName());
     }
 }
