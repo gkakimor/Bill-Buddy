@@ -185,8 +185,9 @@ public class RegisterBill extends AppCompatActivity {
                             selectedType.setType(newType);
                             selectedType.setId(addCode.intValue());
 
-                            typeList.add(typeList.size() - 1, new Type( addCode.intValue(), newType));
+                            //typeList.add(typeList.size() - 1, new Type( addCode.intValue(), newType));
                             adapter.notifyDataSetChanged();
+                            typeList.add(new Type(999, "Add a new type"));
                         } catch (Exception e) {
 
                         }
