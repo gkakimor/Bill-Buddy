@@ -49,8 +49,6 @@ public class RegisterBill extends AppCompatActivity {
 
     Frequency selectedFrequency;
     Type selectedType;
-    int lastTypeCode;
-
     private int user_id;
 
 
@@ -68,7 +66,7 @@ public class RegisterBill extends AppCompatActivity {
         calendar = Calendar.getInstance();
 
         editTxtAmount = findViewById(R.id.editTxtAmount);
-        String amount = editTxtAmount.getText().toString();
+        //String amount = editTxtAmount.getText().toString();
 
         editTxtPayee = findViewById(R.id.editTxtPayee);
 
@@ -99,9 +97,9 @@ public class RegisterBill extends AppCompatActivity {
 
         typeList.add(new Type(998, "Type"));
         ArrayList<Type> savedTypes = dbHandler.getAllTypes();
-        lastTypeCode = savedTypes.get(savedTypes.size()-1).getId();
-
-        typeList.addAll(dbHandler.getAllTypes());
+        if (!savedTypes.isEmpty()) {
+            typeList.addAll(dbHandler.getAllTypes());
+        }
         typeList.add(new Type(999, "Add a new type"));
 
         adapter = new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, typeList);
@@ -184,6 +182,8 @@ public class RegisterBill extends AppCompatActivity {
                             Type type = new Type();
                             type.setType(newType);
                             Long addCode = dbHandler.addNewType(type);
+                            selectedType.setType(newType);
+                            selectedType.setId(addCode.intValue());
 
                             typeList.add(typeList.size() - 1, new Type( addCode.intValue(), newType));
                             adapter.notifyDataSetChanged();

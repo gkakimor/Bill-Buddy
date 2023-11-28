@@ -72,6 +72,16 @@ public class DbHandler extends SQLiteOpenHelper {
                 ")";
         db.execSQL(CREATE_BILLS_TABLE);
 
+        String INSERT_FREQUENCY = "insert into frequency values (1, \"Once\")";
+        db.execSQL(INSERT_FREQUENCY);
+        INSERT_FREQUENCY = "insert into frequency values (2, \"Weekly\")";
+        db.execSQL(INSERT_FREQUENCY);
+        INSERT_FREQUENCY = "insert into frequency values (3, \"Bi-weekly\")";
+        db.execSQL(INSERT_FREQUENCY);
+        INSERT_FREQUENCY = "insert into frequency values (4, \"Monthly\")";
+        db.execSQL(INSERT_FREQUENCY);
+        INSERT_FREQUENCY = "insert into frequency values (5, \"Yearly\")";
+        db.execSQL(INSERT_FREQUENCY);
         //populateInitialData(db);
     }
 
@@ -315,9 +325,9 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void populateInitialData () {
+    public void populateInitialData (SQLiteDatabase db) {
         //SQLiteDatabase db
-        SQLiteDatabase db = this.getWritableDatabase();
+        //SQLiteDatabase db = this.getWritableDatabase();
         String INSERT_FREQUENCY = "insert into frequency values (1, \"weekly\")";
         db.execSQL(INSERT_FREQUENCY);
         INSERT_FREQUENCY = "insert into frequency values (2, \"bi-weekly\")";
@@ -327,12 +337,12 @@ public class DbHandler extends SQLiteOpenHelper {
         INSERT_FREQUENCY = "insert into frequency values (4, \"anually\")";
         db.execSQL(INSERT_FREQUENCY);
 
-        String INSERT_TYPE = "insert into type values (1, \"rent\")";
+        /*String INSERT_TYPE = "insert into type values (1, \"rent\")";
         db.execSQL(INSERT_TYPE);
         INSERT_TYPE = "insert into type values (2, \"electricity\")";
         db.execSQL(INSERT_TYPE);
         INSERT_TYPE = "insert into type values (3, \"college\")";
-        db.execSQL(INSERT_TYPE);
+        db.execSQL(INSERT_TYPE);*/
 
         /*String INSERT_USER = "insert into users (id, name, birth, email, password) values (1, \"Alana\", \"1987-11-14\", \"alana@email.com\", \"senha123\")";
         db.execSQL(INSERT_USER);
