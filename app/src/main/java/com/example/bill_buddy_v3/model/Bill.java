@@ -1,6 +1,8 @@
 package com.example.bill_buddy_v3.model;
 
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Bill {
     private int id;
@@ -93,5 +95,12 @@ public class Bill {
 
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
+    }
+
+    public String getFormattedAmount() {
+        // Format the amount as currency
+        Locale locale = new Locale("en", "US"); // Adjust the locale based on your requirements
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        return currencyFormatter.format(amount);
     }
 }

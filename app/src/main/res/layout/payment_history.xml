@@ -5,26 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg2"
     tools:context=".PaymentHistory">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="20dp"
         android:text="Payment History"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="31sp"
+        android:textStyle="bold" />
 
 
     <ListView
         android:id="@+id/lvPayedBills"
         android:layout_width="match_parent"
-        android:layout_height="483dp" />
+        android:layout_height="352dp" />
 
     <Button
         android:id="@+id/btnHome"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_round_bg"
         android:onClick="home"
         android:text="HOME" />
 

@@ -34,6 +34,9 @@ public class UpdateBill extends AppCompatActivity {
     TextView txtSelectedPayee, txtSelectedFrequency, txtSelectedDueDate, txtSelectedAmount;
     private int user_id;
 
+    private final Class HOME = Home.class;
+    private final UpdateBill CURRENT = UpdateBill.this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +68,8 @@ public class UpdateBill extends AppCompatActivity {
                     txtSelectedPayee.setText(selectedBill.getPayee());
                     txtSelectedFrequency.setText(selectedBill.getFrequency().getFrequency());
                     txtSelectedDueDate.setText("Due: " + sdf.format(selectedBill.getDue_date()));
-                    txtSelectedAmount.setText("Amount: " + Double.toString(selectedBill.getAmount()));
+                    txtSelectedAmount.setText("Amount: " + selectedBill.getFormattedAmount());
+                    linearLayoutBillDetails.setVisibility(View.VISIBLE);
                     linearLayoutBillDetails.setVisibility(View.VISIBLE);
                 } else {
                     linearLayoutBillDetails.setVisibility(View.INVISIBLE);
@@ -112,6 +116,7 @@ public class UpdateBill extends AppCompatActivity {
         billList.add(selectBill);
 
         DbHandler dbHandler = new DbHandler(UpdateBill.this);
+
         billList.addAll(dbHandler.getAllNotPayedBills(user_id));
         dbHandler.close();
     }
@@ -133,5 +138,11 @@ public class UpdateBill extends AppCompatActivity {
             Toast.makeText(UpdateBill.this, "Select Payment Date", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void home (View view) {
+        Intent intent = new Intent(CURRENT, HOME);
+        intent.putExtra("user_id", user_id);
+        startActivity(intent);
     }
 }

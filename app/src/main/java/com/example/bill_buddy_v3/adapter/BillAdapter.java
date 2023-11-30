@@ -60,7 +60,8 @@ public class BillAdapter extends ArrayAdapter<Bill> {
             if (currentItem.getId() != 999) {
                 txtName.setText(currentItem.getPayee());
                 txtFrequency.setText(currentItem.getFrequency().getFrequency());
-                txtAmount.setText(Double.toString(currentItem.getAmount()));
+                //txtAmount.setText(Double.toString(currentItem.getAmount()));
+                txtAmount.setText(currentItem.getFormattedAmount());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
                 String formatedDate = sdf.format(currentItem.getDue_date());
