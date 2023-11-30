@@ -9,8 +9,6 @@ import android.widget.Button;
 
 public class Home extends AppCompatActivity {
 
-    Button btnRegisterBill, btnUpcomingBills, btnPaymentHistory, btnUpdateBill, btnBankList;
-
     private final Class HOME = Home.class;
     private final Home CURRENT = Home.this;
     int user_id;
@@ -22,12 +20,6 @@ public class Home extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         user_id = extras.getInt("user_id");
-
-        btnRegisterBill = findViewById(R.id.btnRegisterBill);
-        btnUpcomingBills = findViewById(R.id.btnUpcomingBills);
-        btnPaymentHistory = findViewById(R.id.btnPaymentHistory);
-        btnUpdateBill = findViewById(R.id.btnUpdateBill);
-        btnBankList = findViewById(R.id.btnBankList);
     }
 
     public void registerBill (View view) {
