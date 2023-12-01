@@ -1,5 +1,6 @@
 package com.example.bill_buddy_v3;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ public class RegisterBill extends AppCompatActivity {
     EditText editTxtDate;
     Calendar calendar;
     Button btnAdd;
+    ImageView imgBack;
 
     Frequency selectedFrequency;
     Type selectedType;
@@ -83,6 +86,17 @@ public class RegisterBill extends AppCompatActivity {
                addBill();
             }
         });
+
+        imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(RegisterBill.this, Home.class);
+                startActivity(intent);
+            }
+        });
+
 
 //add types spinner Type
         DbHandler dbHandler = new DbHandler(RegisterBill.this);
@@ -295,7 +309,7 @@ public class RegisterBill extends AppCompatActivity {
         Log.d("AddBillTest", "Type: " + bill.getType().getType());
         Log.d("AddBillTest", "Frequency: " + bill.getFrequency().getFrequency());
 
-        Toast.makeText(this, "Dados coletados corretamente", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
 
 */
 

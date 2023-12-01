@@ -1,5 +1,6 @@
 package com.example.bill_buddy_v3;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.bill_buddy_v3.model.User;
 import com.example.bill_buddy_v3.utilities.DbHandler;
@@ -25,13 +28,19 @@ public class UserRegister extends AppCompatActivity {
 
 
     EditText editTxtName, editTxtBirth, editTxtEmail, editTxtPassword, editTxtCheckPassword;
-    Button btnAddUser;
+    Button btnAddUser ,  btnCancel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_register);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
+
+        actionBar.setIcon(R.mipmap.ic_launcher);
 
         editTxtName = findViewById(R.id.editTxtName);
         editTxtBirth = findViewById(R.id.editTxtBirth);
@@ -44,6 +53,16 @@ public class UserRegister extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registered();
+            }
+        });
+
+        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserRegister.this, LoginPage.class);
+                startActivity(intent);
             }
         });
 

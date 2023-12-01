@@ -1,5 +1,6 @@
 package com.example.bill_buddy_v3;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class LoginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
 
         txtSignUp = findViewById(R.id.txtSignUp);
         editTxtEmail = findViewById(R.id.editTxtEmail);
