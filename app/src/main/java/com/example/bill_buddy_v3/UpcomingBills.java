@@ -43,7 +43,7 @@ public class UpcomingBills extends AppCompatActivity {
 
             map.put("id", payedBillList.get(i).getId());
             map.put("type", payedBillList.get(i).getType());
-            map.put("amount", payedBillList.get(i).getAmount());
+            map.put("amount", payedBillList.get(i).getFormattedAmount());
             map.put("payee", payedBillList.get(i).getPayee());
             map.put("dueDate", sdf.format(payedBillList.get(i).getDue_date()));
             map.put("frequency", payedBillList.get(i).getFrequency().getFrequency());
