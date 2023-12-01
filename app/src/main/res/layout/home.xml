@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg2"
+    tools:context=".Home">
+
+    <ImageView
+        android:id="@+id/imgRegister"
+        android:layout_width="142dp"
+        android:layout_height="139dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:onClick="registerBill"
+        app:srcCompat="@drawable/menu_register"
+        tools:layout_editor_absoluteX="269dp"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <ImageView
+        android:id="@+id/imgUpdatePayment"
+        android:layout_width="142dp"
+        android:layout_height="139dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:onClick="updateBill"
+        app:srcCompat="@drawable/menu_update_payment"
+        tools:layout_editor_absoluteY="80dp" />
+
+    <ImageView
+        android:id="@+id/imgUpcomingBills"
+        android:layout_width="142dp"
+        android:layout_height="139dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="200dp"
+        android:onClick="upcoming"
+        app:srcCompat="@drawable/menu_upcoming_bills"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="263dp" />
+
+    <ImageView
+        android:id="@+id/imgPaymentHistory"
+        android:layout_width="142dp"
+        android:layout_height="139dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        android:onClick="history"
+        app:srcCompat="@drawable/menu_payment_history"
+        tools:layout_editor_absoluteX="229dp"
+        tools:layout_editor_absoluteY="320dp" />
+
+    <ImageView
+        android:id="@+id/imgAccessBank"
+        android:layout_width="142dp"
+        android:layout_height="139dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="370dp"
+        android:onClick="bankList"
+        app:srcCompat="@drawable/menu_access_bank"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="444dp" />
+
+</RelativeLayout>
