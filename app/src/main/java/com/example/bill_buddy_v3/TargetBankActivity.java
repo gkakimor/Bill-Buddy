@@ -9,10 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 public class TargetBankActivity extends AppCompatActivity {
-
-
-    ImageView imgCIBC, imgBMO , imgSCOTIA , imgTD , imgRBC;
-
+    ImageView imgCIBC, imgBMO , imgSCOTIA , imgTD , imgRBC , imgBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +78,14 @@ public class TargetBankActivity extends AppCompatActivity {
         });
 
 
+        imgBack = findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+                Intent intent = new Intent(TargetBankActivity.this, Home.class);
+                startActivity(intent);
+            }
+        });
     }
 }

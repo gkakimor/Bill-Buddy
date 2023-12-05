@@ -42,7 +42,6 @@ public class BillAdapter extends ArrayAdapter<Bill> {
     private View initView(int position, View convertView,
                           ViewGroup parent)
     {
-        // It is used to set our custom view.
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.bill_list, parent, false);
         }
@@ -54,13 +53,10 @@ public class BillAdapter extends ArrayAdapter<Bill> {
         TextView txtSelectBill = convertView.findViewById(R.id.txtSelectBill);
         Bill currentItem = getItem(position);
 
-        // It is used the name to the TextView when the
-        // current item is not null.
         if (currentItem != null) {
             if (currentItem.getId() != 999) {
                 txtName.setText(currentItem.getPayee());
                 txtFrequency.setText(currentItem.getFrequency().getFrequency());
-                //txtAmount.setText(Double.toString(currentItem.getAmount()));
                 txtAmount.setText(currentItem.getFormattedAmount());
 
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");

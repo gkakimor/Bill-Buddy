@@ -54,10 +54,7 @@ public class LoginPage extends AppCompatActivity {
             }
         });
 
-
     }
-
-    //LOGIN VALIDATE
     private void loginValidate() {
         String userEmail = editTxtEmail.getText().toString();
         String userPassword = editTxtPassword.getText().toString();
@@ -84,23 +81,13 @@ public class LoginPage extends AppCompatActivity {
         return true;
     }
 
-    //SIGN UP CLICK--
-    /*public void onTextViewClick(View view) {
-        openSignUp();
-    }*/
-
     private void openSignUp() {
         Intent intent = new Intent(this, UserRegister.class);
         startActivity(intent);
     }
 
-    //LOGIN BUTTON CLICK--
-    /*public void onButtonClick(View view) {
-        loginValidate();
-    }*/
-
     private void openHome() {
-        Intent intent = new Intent(this, Home.class); //trocar por Home.class
+        Intent intent = new Intent(this, Home.class);
         intent.putExtra("user_id", savedUser.getId());
         startActivity(intent);
     }

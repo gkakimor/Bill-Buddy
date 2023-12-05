@@ -5,72 +5,90 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F1EC"
     tools:context=".TargetBankActivity">
 
-    <ImageView
-        android:id="@+id/imgCIBC"
-        android:layout_width="167dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/cibcbancologo" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="341dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="40dp"
-        android:text="Click to pay"
-        android:textSize="34sp"
+        android:layout_width="363dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="56dp"
+        android:background="#F2F1EC"
+        android:text="Click to access your bank "
+        android:textAlignment="center"
+        android:textColor="#504F4F"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/imgBack"
+        android:layout_width="49dp"
+        android:layout_height="41dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.888"
+        app:srcCompat="?attr/homeAsUpIndicator" />
+
+    <ImageView
         android:id="@+id/imgBMO"
-        android:layout_width="354dp"
-        android:layout_height="114dp"
+        android:layout_width="328dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgSCOTIA"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/imgTD"
+        app:layout_constraintVertical_bias="0.087"
         app:srcCompat="@drawable/bmologo2" />
 
     <ImageView
         android:id="@+id/imgRBC"
-        android:layout_width="124dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="116dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toEndOf="@+id/imgCIBC"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/rbclogo" />
 
     <ImageView
-        android:id="@+id/imgSCOTIA"
-        android:layout_width="194dp"
-        android:layout_height="147dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
-        app:layout_constraintStart_toEndOf="@+id/imgTD"
-        app:layout_constraintTop_toBottomOf="@+id/imgRBC"
-        app:srcCompat="@drawable/scotialogo" />
+        android:id="@+id/imgCIBC"
+        android:layout_width="153dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/cibcbancologo" />
 
     <ImageView
         android:id="@+id/imgTD"
-        android:layout_width="162dp"
-        android:layout_height="171dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="136dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCIBC"
         app:srcCompat="@drawable/tdlogo" />
+
+    <ImageView
+        android:id="@+id/imgSCOTIA"
+        android:layout_width="178dp"
+        android:layout_height="126dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toEndOf="@+id/imgTD"
+        app:layout_constraintTop_toBottomOf="@+id/imgRBC"
+        app:srcCompat="@drawable/scotialogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

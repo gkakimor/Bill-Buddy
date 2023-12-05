@@ -92,15 +92,7 @@ public class UserRegister extends AppCompatActivity {
     private void registered() {
         if (areFieldsValid()) {
 
-            //String userName = editTxtName.getText().toString();
-            //String userEmail = editTxtEmail.getText().toString();
-            //String userPassword = editTxtPassword.getText().toString();
-           // String dateBirthString = editTxtBirth.getText().toString();
-
-
             String hashedPassword = Security.hashPassword(editTxtPassword.getText().toString());
-            //Date birthDate = new Date();
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
             try {
                 User newUser = new User();
@@ -116,6 +108,7 @@ public class UserRegister extends AppCompatActivity {
                 dbHandler.addNewUser(newUser);
 
                 dbHandler.close();
+                Toast.makeText(UserRegister.this, "User registered.", Toast.LENGTH_SHORT).show();
 
                 openLogin();
 
@@ -123,10 +116,6 @@ public class UserRegister extends AppCompatActivity {
                 Toast.makeText(UserRegister.this, "Cannot register now. Please try again later.", Toast.LENGTH_SHORT).show();
             }
 
-
-
-        } else {
-            Toast.makeText(UserRegister.this, "Please, fill the fields!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -147,6 +136,15 @@ public class UserRegister extends AppCompatActivity {
             Toast.makeText(this, "The password do not match!", Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            sdf.parse(editTxtBirth.getText().toString());
+        } catch (ParseException e) {
+            Toast.makeText(this, "Invalid birth date.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
 
@@ -154,14 +152,6 @@ public class UserRegister extends AppCompatActivity {
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
     }
-
-    /*public void onButtonClick(View view) {
-        boolean registrationSuccess = registered();
-
-        if (registrationSuccess) {
-            openLogin();
-        }
-    }*/
 
 }
 

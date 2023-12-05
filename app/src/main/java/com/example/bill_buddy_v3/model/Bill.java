@@ -98,8 +98,7 @@ public class Bill {
     }
 
     public String getFormattedAmount() {
-        // Format the amount as currency
-        Locale locale = new Locale("en", "US"); // Adjust the locale based on your requirements
+        Locale locale = new Locale("en", "US");
         NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
         return currencyFormatter.format(amount);
     }

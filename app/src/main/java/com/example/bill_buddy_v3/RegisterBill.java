@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,29 +33,23 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class RegisterBill extends AppCompatActivity {
-   // DbHandler dbHandler = new DbHandler(RegisterBill.this);
     Bill bill = new Bill();
     ArrayList<Frequency> frequencyList = new ArrayList<>();
     ArrayList<Type> typeList = new ArrayList<>();
 
     Type type;
     Frequency frequency;
-
     EditText editTxtPayee, editTxtAmount;
     Spinner spnTypeBill, spnFrequency;
-    //ArrayList<String> typeBillOptions;
     ArrayAdapter<Type> adapter;
     ArrayAdapter<Frequency> adapterFrequency;
     EditText editTxtDate;
     Calendar calendar;
     Button btnAdd;
     ImageView imgBack;
-
     Frequency selectedFrequency;
     Type selectedType;
     private int user_id;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +59,19 @@ public class RegisterBill extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         user_id = extras.getInt("user_id");
 
-
         editTxtDate = findViewById(R.id.editTxtDate);
         calendar = Calendar.getInstance();
-
         editTxtAmount = findViewById(R.id.editTxtAmount);
-        //String amount = editTxtAmount.getText().toString();
-
         editTxtPayee = findViewById(R.id.editTxtPayee);
-
-
         spnTypeBill = findViewById(R.id.spnTypeBill);
-
         spnFrequency = findViewById(R.id.spnFrequency);
-
         btnAdd = findViewById(R.id.btnAdd);
                 btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               addBill();
+                if (areFieldsValid()) {
+                    addBill();
+                }
             }
         });
 
@@ -97,17 +85,7 @@ public class RegisterBill extends AppCompatActivity {
             }
         });
 
-
-//add types spinner Type
         DbHandler dbHandler = new DbHandler(RegisterBill.this);
-
-        /*typeBillOptions = new ArrayList<>();
-        typeBillOptions.add("Type");
-        typeBillOptions.add("Electricity");
-        typeBillOptions.add("Rental");
-        typeBillOptions.add("Insurance");
-        typeBillOptions.add("Credit Card");
-        typeBillOptions.add("Add a new type");*/
 
         typeList.add(new Type(998, "Type"));
         ArrayList<Type> savedTypes = dbHandler.getAllTypes();
@@ -119,12 +97,9 @@ public class RegisterBill extends AppCompatActivity {
         adapter = new ArrayAdapter<Type>(this, android.R.layout.simple_spinner_item, typeList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnTypeBill.setAdapter(adapter);
-//user add new type
-        //typeBillOptions.get(spnTypeBill.getSelectedItemPosition());
         spnTypeBill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //String type = typeBillOptions.get(position);
                 selectedType = (Type) parent.getItemAtPosition(position);
                 if (selectedType.getId() == 999) {
                     showAddTypeDialog();
@@ -135,7 +110,6 @@ public class RegisterBill extends AppCompatActivity {
             }
         });
 
-//spinner frequency
         frequencyList.add(new Frequency(999, "How Often"));
         frequencyList.addAll(dbHandler.getAllFrequency());
 
@@ -154,15 +128,6 @@ public class RegisterBill extends AppCompatActivity {
             }
         });
 
-
-        /*adapterFrequency.add("How Often");
-        adapterFrequency.add("Once");
-        adapterFrequency.add("Weekly");
-        adapterFrequency.add("Bi-Weekly");
-        adapterFrequency.add("Monthly");
-        adapterFrequency.add("Yearly");*/
-
-//Date - datePicker
         editTxtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -171,16 +136,8 @@ public class RegisterBill extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
-
     }
 
-    //FUNCTIONS--
     private void showAddTypeDialog() {
         final EditText editText = new EditText(this);
 
@@ -199,15 +156,11 @@ public class RegisterBill extends AppCompatActivity {
                             selectedType.setType(newType);
                             selectedType.setId(addCode.intValue());
 
-                            //typeList.add(typeList.size() - 1, new Type( addCode.intValue(), newType));
                             adapter.notifyDataSetChanged();
                             typeList.add(new Type(999, "Add a new type"));
                         } catch (Exception e) {
 
                         }
-
-
-
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -224,58 +177,56 @@ public class RegisterBill extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        //calendar.set(year, monthOfYear, dayOfMonth);
-                        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                         editTxtDate.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
                     }
                 },
                 year, month, day
         );
 
-        //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-
         datePickerDialog.show();
     }
 
-    private void addBill(){
-        //Payee values
-        //editTxtPayee = findViewById(R.id.editTxtPayee); //??????????preciso disso aqui?
-        String payee = editTxtPayee.getText().toString();
+    private boolean areFieldsValid() {
 
-        //Amount to double
-        double amount = 0.0;
-        try {
-           // editTxtAmount = findViewById(R.id.editTxtAmount);   //??????????preciso disso aqui?
-            amount = Double.parseDouble(editTxtAmount.getText().toString());
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return; // mensagem para inserir numero valido
+        if (selectedType.getId() == 998) {
+            Toast.makeText(this, "Select Bill Type", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
-        //Date
-//        editTxtDate = findViewById(R.id.editTxtDate);//??????????preciso disso aqui?
-//        calendar = Calendar.getInstance();//??????????preciso disso aqui?
-//        String dateString = editTxtDate.getText().toString();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-//        Date due_date;
-//        try {
-//            due_date = dateFormat.parse(dateString);
-//        } catch (ParseException e) {
-//
-//            e.printStackTrace();
-//            return; // mensagem para inserir date valida
-//        }
+        if (editTxtAmount.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Inform the amount.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-        //Spinners
-        //Type selectedType = (Type) spnTypeBill.getSelectedItem();
-        //Frequency selectedFrequency = (Frequency) spnFrequency.getSelectedItem();
+        if (editTxtPayee.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Inform the Payee.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-        //Type, Frequency e Bill
-        //Type type = new Type();
-        //type.setType(selectedType.getType());
+        if (editTxtDate.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Inform the due Date.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-        //Frequency frequency = new Frequency();
-        //frequency.setFrequency(selectedFrequency.getFrequency());
+        if (selectedFrequency.getId() == 999) {
+            Toast.makeText(this, "Select the Frequency", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void addBill(){
+
+        String payee = editTxtPayee.getText().toString();
+
+        double amount = 0.0;
+        try {
+            amount = Double.parseDouble(editTxtAmount.getText().toString());
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid amount.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         try {
 
@@ -299,81 +250,10 @@ public class RegisterBill extends AppCompatActivity {
 
 
         } catch (ParseException e) {
+            Toast.makeText(this, "Invalid date.", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
             Toast.makeText(this, "Bill not saved. Try again later.", Toast.LENGTH_SHORT).show();
         }
-/*
-
-        Log.d("AddBillTest", "Payee: " + bill.getPayee());
-        Log.d("AddBillTest", "Amount: " + bill.getAmount());
-       // Log.d("AddBillTest", "Date: " + due_date);
-        Log.d("AddBillTest", "Type: " + bill.getType().getType());
-        Log.d("AddBillTest", "Frequency: " + bill.getFrequency().getFrequency());
-
-        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
-
-*/
-
-
-
-
     }
 
-
-
-
 }
-
-
-
-
-
-//    private void addBill() {
-//        type = new Type();
-//        frequency = new Frequency();
-//
-//        String payee = editTxtPayee.getText().toString();
-//        //String amount = editTxtAmount.getText().toString();
-//
-//        String frequencyValue = spnFrequency.getSelectedItem().toString();
-//        frequency.setFrequency(frequencyValue);
-//
-//        String typeValue = spnTypeBill.getSelectedItem().toString();
-//        type.setType(typeValue);
-//
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-//        String dateString = editTxtDate.getText().toString();
-//
-//        Date date = null;
-//        try {
-//            date = dateFormat.parse(dateString);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Bill bill = new Bill();
-//        currentBill = bill;
-//
-//
-////        bill.setFrequency(frequency);
-////        bill.setPayee(payee);
-////        bill.setDue_date(date);
-//
-//
-////        Bill bill = new Bill(payee, type.getType(), date, amount, frequency.getFrequency());
-////        currentBill = bill;
-//
-//        String message = "Payee: " + bill.getPayee() + "\nType: " + bill.getType() +
-//                "\nDate: " + (date != null ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date.getTime()) : "");
-//        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-//
-////        String message = "Payee: " + bill.getPayee() + "\nType: " + bill.getType() +
-////                "\nDate: " + (dateString != null ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(dateFormat) : "");
-////        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-//
-////        String message = "Payee: " + bill.getPayee() +
-////                "\nType: " + type.getType() +
-////                "\nDate: " + (date != null ? new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date.getTime()) : "") +
-////              //  "\nAmount: " + bill.getAmount() +
-////                "\nFrequency: " + bill.getFrequency();
-////        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-////    }

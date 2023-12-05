@@ -45,11 +45,9 @@ public class UpdateBill extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         user_id = extras.getInt("user_id");
 
-        // Initialize Spinner
         initList();
         Spinner spinner = findViewById(R.id.spinBills);
         billAdapter = new BillAdapter(this, billList);
-        //billAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setAdapter(billAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -74,8 +72,6 @@ public class UpdateBill extends AppCompatActivity {
                 } else {
                     linearLayoutBillDetails.setVisibility(View.INVISIBLE);
                 }
-
-                //Toast.makeText(UpdateBill.this, name + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -84,7 +80,6 @@ public class UpdateBill extends AppCompatActivity {
             }
         });
 
-        // date picker
         editTxtPaymentDate = findViewById(R.id.editTxtPaymentDate);
         editTxtPaymentDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +117,11 @@ public class UpdateBill extends AppCompatActivity {
     }
 
     public void updateBill (View view) throws ParseException {
+
+        if (selectedBill.getId() == 999) {
+            Toast.makeText(this, "Select Bill.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (!editTxtPaymentDate.getText().toString().matches("")){
             DbHandler dbHandler = new DbHandler(UpdateBill.this);
